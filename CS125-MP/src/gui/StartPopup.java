@@ -1,9 +1,9 @@
 package gui;
 
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
 public class StartPopup {
-    public void showPopup() {
+    public String showPopup() {
         String[] options = {"Easy", "Medium", "Hard"};
         int choice = JOptionPane.showOptionDialog(
                 null,
@@ -16,7 +16,11 @@ public class StartPopup {
                 options[0]
         );
 
+        if (choice == -1) {
+            return null;  // User closed the popup without making a choice
+        }
+
         System.out.println("Difficulty chosen: " + options[choice]);
-        // You can store or use the difficulty choice for puzzle generation later.
+        return options[choice];
     }
 }
