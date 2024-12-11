@@ -30,6 +30,8 @@ public class SudokuGUI extends JFrame {
 
         // Add validation button (optional: user can click to validate their move)
         JButton validateButton = new JButton("Validate");
+        validateButton.setFont(new Font("Arial", Font.BOLD, 16));
+        validateButton.setBackground(Color.WHITE);
         validateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -39,6 +41,7 @@ public class SudokuGUI extends JFrame {
         
         // Add button to the bottom of the frame
         JPanel buttonPanel = new JPanel();
+        buttonPanel.setBackground(Color.WHITE);
         buttonPanel.add(validateButton);
         add(buttonPanel, BorderLayout.SOUTH);
     }
@@ -51,11 +54,15 @@ public class SudokuGUI extends JFrame {
         for (int row = 0; row < 9; row++) {
             for (int col = 0; col < 9; col++) {
                 cells[row][col] = new JTextField();
+                cells[row][col].setForeground(Color.BLUE);
+                cells[row][col].setBorder(BorderFactory.createLineBorder(Color.BLACK));
                 cells[row][col].setHorizontalAlignment(JTextField.CENTER);
+                cells[row][col].setFont(new Font("Times New Roman", Font.PLAIN, 24));
 
                 // Display the generated puzzle values
                 if (board[row][col] != 0) {
                     cells[row][col].setText(String.valueOf(board[row][col]));
+                    cells[row][col].setForeground(Color.BLACK);
                     cells[row][col].setEditable(false); // Disable editing for pre-filled cells
                 }
 

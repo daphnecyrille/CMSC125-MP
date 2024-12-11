@@ -1,6 +1,7 @@
 package gui;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class StartPopup {
     public String showPopup() {
@@ -11,6 +12,7 @@ public class StartPopup {
                 "Sudoku Game",
                 JOptionPane.DEFAULT_OPTION,
                 JOptionPane.INFORMATION_MESSAGE,
+
                 null,
                 options,
                 options[0]
