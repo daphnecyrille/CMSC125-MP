@@ -14,7 +14,7 @@ public class SudokuGUI extends JFrame {
 
     public SudokuGUI(String difficulty) {
         setTitle("Sudoku Game");
-        setSize(400, 400);
+        setMinimumSize(new Dimension(800, 600));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Initialize the board and solver
@@ -30,7 +30,7 @@ public class SudokuGUI extends JFrame {
 
         // Add validation button (optional: user can click to validate their move)
         JButton validateButton = new JButton("Validate");
-        validateButton.setFont(new Font("Arial", Font.BOLD, 16));
+        validateButton.setFont(new Font("Arial", Font.BOLD, 24));
         validateButton.setBackground(Color.WHITE);
         validateButton.addActionListener(new ActionListener() {
             @Override
@@ -43,7 +43,21 @@ public class SudokuGUI extends JFrame {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(Color.WHITE);
         buttonPanel.add(validateButton);
-        add(buttonPanel, BorderLayout.SOUTH);
+        add(buttonPanel, BorderLayout.LINE_START);
+
+        JButton returnButton = new JButton("Return");
+        returnButton.setFont(new Font("Arial", Font.BOLD, 24));
+        returnButton.setBackground(Color.WHITE);
+        returnButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            }
+        });
+
+        JPanel buttonPanel2 = new JPanel();
+        buttonPanel2.setBackground(Color.WHITE);
+        buttonPanel2.add(returnButton);
+        add(buttonPanel2, BorderLayout.LINE_END);
     }
 
     private void initializeBoard() {
@@ -57,12 +71,13 @@ public class SudokuGUI extends JFrame {
                 cells[row][col].setForeground(Color.BLUE);
                 cells[row][col].setBorder(BorderFactory.createLineBorder(Color.BLACK));
                 cells[row][col].setHorizontalAlignment(JTextField.CENTER);
-                cells[row][col].setFont(new Font("Times New Roman", Font.PLAIN, 24));
+                cells[row][col].setFont(new Font("Times New Roman", Font.BOLD, 24));
 
                 // Display the generated puzzle values
                 if (board[row][col] != 0) {
                     cells[row][col].setText(String.valueOf(board[row][col]));
                     cells[row][col].setForeground(Color.BLACK);
+                    cells[row][col].setFont(new Font("Times New Roman", Font.PLAIN, 24));
                     cells[row][col].setEditable(false); // Disable editing for pre-filled cells
                 }
 
