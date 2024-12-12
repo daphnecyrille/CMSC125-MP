@@ -24,8 +24,7 @@ public class PuzzleGenerator {
     public int[][] generatePuzzle(String difficulty) {
         int numClues = getCluesForDifficulty(difficulty);
 
-        // Generate a full solved Sudoku board first (you can use an existing solver or algorithm)
-        // For simplicity, this part assumes you already have a solved board.
+        // Generate a full solved Sudoku board first
         generateSolvedBoard();
 
         // Randomly remove numbers based on the difficulty
@@ -35,7 +34,7 @@ public class PuzzleGenerator {
     }
 
     private void generateSolvedBoard() {
-        // Simple backtracking to generate a solved Sudoku board (you can optimize or replace this)
+        // Simple backtracking to generate a solved Sudoku board
         solve(board);
     }
 

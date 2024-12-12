@@ -1,8 +1,8 @@
 package gui;
 
 import javax.swing.*;
-import solver.Solver;
-import logic.PuzzleGenerator;  // Import the PuzzleGenerator
+import logic.PuzzleGenerator;
+import logic.SudokuValidator;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,16 +10,14 @@ import java.awt.event.ActionListener;
 public class SudokuGUI extends JFrame {
     private int[][] board; // Store the current Sudoku board
     private JTextField[][] cells; // GUI components for board cells
-    private Solver solver; // Solver instance for validating the board
 
     public SudokuGUI(String difficulty) {
         setTitle("Sudoku Game");
         setMinimumSize(new Dimension(800, 600));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // Initialize the board and solver
+        // Initialize the board
         board = new int[9][9];
-        solver = new Solver(board);
 
         // Generate puzzle based on difficulty
         PuzzleGenerator generator = new PuzzleGenerator();
@@ -28,7 +26,7 @@ public class SudokuGUI extends JFrame {
         cells = new JTextField[9][9];
         initializeBoard();
 
-        // Add validation button (optional: user can click to validate their move)
+        
         JButton validateButton = new JButton("Validate");
         validateButton.setFont(new Font("Arial", Font.BOLD, 24));
         validateButton.setBackground(Color.WHITE);
@@ -38,8 +36,8 @@ public class SudokuGUI extends JFrame {
                 validateBoard();
             }
         });
+
         
-        // Add button to the bottom of the frame
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(Color.WHITE);
         buttonPanel.add(validateButton);
@@ -51,6 +49,10 @@ public class SudokuGUI extends JFrame {
         returnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                dispose();
+                SwingUtilities.invokeLater(() -> {
+                    SudokuGame.main(null); // Redirect to the menu by calling the main method of SudokuGame
+                });
             }
         });
 
@@ -104,14 +106,15 @@ public class SudokuGUI extends JFrame {
             }
         }
 
-        // Validate the board using the Solver
-        if (solver.isBoardValid()) {
+        // Validate the board using the SudokuValidator
+        SudokuValidator validator = new SudokuValidator();
+        if (validator.validate(board)) {
             JOptionPane.showMessageDialog(this, "The board is valid!");
         } else {
             JOptionPane.showMessageDialog(this, "The board is invalid. Try again!");
         }
     }
-    
+
     public static void main(String[] args) {
         // Show pop-up when the game starts and capture the difficulty choice
         StartPopup popup = new StartPopup();
@@ -119,12 +122,7 @@ public class SudokuGUI extends JFrame {
 
         if (difficulty != null) {
             // Run the game
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    new SudokuGUI(difficulty).setVisible(true);  // Display the GUI window with the puzzle
-                }
-            });
+            SwingUtilities.invokeLater(() -> new SudokuGUI(difficulty).setVisible(true));
         }
     }
 }
