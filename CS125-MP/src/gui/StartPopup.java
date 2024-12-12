@@ -10,7 +10,7 @@ public class StartPopup {
         int choice = JOptionPane.showOptionDialog(
                 null,
                 "Welcome to Sudoku! Choose your difficulty:",
-                "Sudoku Game Checker",
+                "Sudoku Game",
                 JOptionPane.DEFAULT_OPTION,
                 JOptionPane.INFORMATION_MESSAGE,
 
@@ -20,7 +20,7 @@ public class StartPopup {
         );
 
         if (choice == -1) {
-            return null;  // User closed the popup without making a choice
+            return null;
         }
 
         System.out.println("Difficulty chosen: " + options[choice]);
