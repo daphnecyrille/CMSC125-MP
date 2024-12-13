@@ -5,9 +5,9 @@ import java.util.Random;
 public class PuzzleGenerator {
 
     private static final int SIZE = 9;
-    private static final int[] EASY = {36, 45, 50};   // Number of pre-filled cells for different difficulties
-    private static final int[] MEDIUM = {30, 40, 45};
-    private static final int[] HARD = {20, 30, 35};
+    private static final int[] EASY = {40, 45, 50};   // Number of pre-filled cells for different difficulties
+    private static final int[] MEDIUM = {30, 35, 39};
+    private static final int[] HARD = {20, 25, 29};
     
     private int[][] board;
 
