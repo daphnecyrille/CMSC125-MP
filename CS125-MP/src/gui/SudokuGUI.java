@@ -77,6 +77,9 @@ public class SudokuGUI extends JFrame {
                     cells[row][col].setForeground(Color.BLACK);
                     cells[row][col].setFont(new Font("Verdana", Font.PLAIN, 24));
                     cells[row][col].setEditable(false);
+                    cells[row][col].setBackground(Color.LIGHT_GRAY);  // Set background color for given cells
+                } else {
+                    cells[row][col].setBackground(Color.WHITE);  // Set background color for editable cells
                 }
 
                 boardPanel.add(cells[row][col]);
