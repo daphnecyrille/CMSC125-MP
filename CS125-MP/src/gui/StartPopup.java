@@ -2,6 +2,7 @@ package gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 
 public class StartPopup extends JFrame {
 
@@ -45,16 +46,17 @@ public class StartPopup extends JFrame {
 
         // Buttons for difficulties
         String[] difficulties = {"Easy", "Medium", "Hard"};
-        Color[] buttonColors = {new Color(30, 144, 255), new Color(255, 215, 0), new Color(220, 20, 60)};
+        Color[] buttonColors = {new Color(48, 172, 236), new Color(244, 202, 87), new Color(233, 82, 100)};
         for (int i = 0; i < difficulties.length; i++) {
             JButton button = new JButton(difficulties[i]);
             button.setFont(new Font("Arial", Font.BOLD, 18));
             button.setForeground(Color.WHITE);
             button.setBackground(buttonColors[i]);
+            button.setOpaque(true);
             button.setFocusPainted(false);
 
             button.setBorder(BorderFactory.createCompoundBorder(
-                    BorderFactory.createLineBorder(Color.WHITE, 2),
+                    BorderFactory.createLineBorder(buttonColors[i], 2),
                     BorderFactory.createEmptyBorder(10, 10, 10, 10)
             ));
             button.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -68,11 +70,42 @@ public class StartPopup extends JFrame {
                 }
                 dispose();
             });
+
             backgroundPanel.add(Box.createVerticalStrut(20));
             backgroundPanel.add(button);
         }
 
+        // Create an "Exit" button
+        JButton exitButton = new JButton("Exit");
+        exitButton.setFont(new Font("Arial", Font.BOLD, 18));
+        exitButton.setForeground(Color.WHITE);
+        exitButton.setBackground(new Color(149, 145, 137));
+        exitButton.setOpaque(true);
+        exitButton.setFocusPainted(false);
+        exitButton.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(149, 145, 137), 2),
+                BorderFactory.createEmptyBorder(10, 10, 10, 10)
+        ));
+        exitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        exitButton.setMaximumSize(new Dimension(300, 50));
+        exitButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        exitButton.addActionListener(e -> {
+            System.exit(0); // Exit the program
+        });
+
+        // Add the Exit button to the background panel
+        backgroundPanel.add(Box.createVerticalStrut(20));
+        backgroundPanel.add(exitButton);
+
         setLocationRelativeTo(null); // Center the frame on the screen
         setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new StartPopup(difficulty -> {
+            // Handle difficulty selection
+            System.out.println("Selected Difficulty: " + difficulty);
+        }));
     }
 }

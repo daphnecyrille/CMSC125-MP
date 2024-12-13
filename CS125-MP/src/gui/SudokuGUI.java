@@ -11,8 +11,22 @@ public class SudokuGUI extends JFrame {
 
     public SudokuGUI(String difficulty) {
         setTitle("Sudoku Game");
-        setMinimumSize(new Dimension(800, 600));
+        setMinimumSize(new Dimension(600, 600));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // Set up the gradient background
+        JPanel backgroundPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g;
+                GradientPaint gradient = new GradientPaint(0, 0, new Color(110, 33, 168), 0, getHeight(), new Color(184, 52, 110));
+                g2d.setPaint(gradient);
+                g2d.fillRect(0, 0, getWidth(), getHeight());
+            }
+        };
+        backgroundPanel.setLayout(new BorderLayout());
+        add(backgroundPanel);
 
         // Center the window
         setLocationRelativeTo(null); 
@@ -24,16 +38,20 @@ public class SudokuGUI extends JFrame {
         cells = new JTextField[9][9];
         initializeBoard();
 
+        // Create and add the buttons panel
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new FlowLayout());
+        buttonPanel.setOpaque(false); // Transparent panel to match background
+        backgroundPanel.add(buttonPanel, BorderLayout.SOUTH);
+
+        // Validate Button
         JButton validateButton = new JButton("Validate");
         validateButton.setFont(new Font("Arial", Font.BOLD, 24));
         validateButton.setBackground(Color.WHITE);
         validateButton.addActionListener(e -> validateBoard());
-
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setBackground(Color.PINK);
         buttonPanel.add(validateButton);
-        add(buttonPanel, BorderLayout.LINE_START);
 
+        // Return Button
         JButton returnButton = new JButton("Return");
         returnButton.setFont(new Font("Arial", Font.BOLD, 24));
         returnButton.setBackground(Color.WHITE);
@@ -41,21 +59,11 @@ public class SudokuGUI extends JFrame {
             dispose();
             SwingUtilities.invokeLater(() -> new StartPopup(newDifficulty -> new SudokuGUI(newDifficulty).setVisible(true)));
         });
-
-        JPanel buttonPanel2 = new JPanel();
-        buttonPanel2.setBackground(Color.PINK);
-        buttonPanel2.add(returnButton);
-        add(buttonPanel2, BorderLayout.LINE_END);
-
-        JPanel buttonPanel3 = new JPanel();
-        buttonPanel3.setBackground(Color.PINK);
-        add(buttonPanel3, BorderLayout.PAGE_START);
-    }
-
-    private void initializeBoard() {
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(9, 9));
-
+        buttonPanel.add(returnButton);
+        
+        // Add the Sudoku board to the center of the background panel
+        JPanel boardPanel = new JPanel();
+        boardPanel.setLayout(new GridLayout(9, 9));
         for (int row = 0; row < 9; row++) {
             for (int col = 0; col < 9; col++) {
                 cells[row][col] = new JTextField();
@@ -71,11 +79,15 @@ public class SudokuGUI extends JFrame {
                     cells[row][col].setEditable(false);
                 }
 
-                panel.add(cells[row][col]);
+                boardPanel.add(cells[row][col]);
             }
         }
+        
+        backgroundPanel.add(boardPanel, BorderLayout.CENTER);
+    }
 
-        add(panel, BorderLayout.CENTER);
+    private void initializeBoard() {
+        // Already handled inside the `boardPanel` section in the main constructor
     }
 
     private void validateBoard() {
