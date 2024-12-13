@@ -45,7 +45,7 @@ public class SudokuGUI extends JFrame {
         backgroundPanel.add(buttonPanel, BorderLayout.SOUTH);
 
         // Validate Button
-        JButton validateButton = new JButton("Validate");
+        JButton validateButton = new JButton("Submit");
         validateButton.setFont(new Font("Arial", Font.BOLD, 24));
         validateButton.setBackground(Color.WHITE);
         validateButton.addActionListener(e -> validateBoard());
@@ -104,14 +104,44 @@ public class SudokuGUI extends JFrame {
                 }
             }
         }
-
+    
         SudokuValidator validator = new SudokuValidator();
         if (validator.validate(board)) {
-            JOptionPane.showMessageDialog(this, "The board is valid!");
+            // Custom dialog for valid board
+            showCustomMessage("CONGRATULATIONS! You have completed this level.", true);
         } else {
-            JOptionPane.showMessageDialog(this, "The board is invalid. Try again!");
+            // Custom dialog for invalid board
+            showCustomMessage("Oops, please try again!", false);
         }
     }
+    
+    private void showCustomMessage(String message, boolean isValid) {
+        // Create a custom dialog
+        JDialog dialog = new JDialog(this, true);
+        dialog.setSize(300, 200);
+        dialog.setLocationRelativeTo(this); // Center the dialog
+    
+        // Create a panel for the message
+        JPanel panel = new JPanel();
+        panel.setBackground(new Color(182, 52, 111));
+        panel.setLayout(new BorderLayout());
+    
+        // Add the message label
+        JLabel messageLabel = new JLabel(message, SwingConstants.CENTER);
+        messageLabel.setFont(new Font("Arial", Font.BOLD, 22));
+        messageLabel.setForeground(Color.WHITE);
+        panel.add(messageLabel, BorderLayout.CENTER);
+    
+        // Add a close button
+        JButton closeButton = new JButton("Close");
+        closeButton.setFont(new Font("Arial", Font.PLAIN, 16));
+        closeButton.addActionListener(e -> dialog.dispose());
+        panel.add(closeButton, BorderLayout.SOUTH);
+    
+        // Set the dialog's content
+        dialog.setContentPane(panel);
+        dialog.setVisible(true);
+    }    
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new StartPopup(newDifficulty -> new SudokuGUI(newDifficulty).setVisible(true)));
