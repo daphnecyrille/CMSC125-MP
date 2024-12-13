@@ -1,6 +1,9 @@
 package gui;
 
-public class SudokuGame {
+import javax.swing.*;
+import java.awt.*;
+
+public class SudokuGame extends JFrame {
     public static void main(String[] args) {
         // Show pop-up when the game starts and capture the difficulty choice
         StartPopup popup = new StartPopup();
