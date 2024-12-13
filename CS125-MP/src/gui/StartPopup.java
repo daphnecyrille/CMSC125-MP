@@ -106,7 +106,6 @@ public class StartPopup extends JFrame {
         SwingUtilities.invokeLater(() -> new StartPopup(difficulty -> {
             // Handle difficulty selection
             System.out.println("Selected Difficulty: " + difficulty);
-            // Here, you can instantiate your Sudoku game with the chosen difficulty
         }));
     }
 }
