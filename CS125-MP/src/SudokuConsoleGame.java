@@ -19,6 +19,9 @@ public class SudokuConsoleGame {
 
         System.out.println("Select difficulty (Easy, Medium, Hard): ");
         String difficulty = scanner.nextLine();
+        if (!difficulty.matches("Easy|Medium|Hard")) {
+            throw new IllegalArgumentException("Difficulty must be Easy, Medium, or Hard");
+        }
 
         board = generator.generatePuzzle(difficulty);
         play(scanner);
